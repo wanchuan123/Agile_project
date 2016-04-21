@@ -1,9 +1,12 @@
 ﻿package code;
 
+import java.util.LinkedList;
+import java.util.Scanner;
 
 public class UI {
 	
-	  
+	private GradeSystems aGradeSystem;
+	private String ID;
 	/*
 	 * try 
 	 *	1.call GradeSystems() to建構 aGradeSystem
@@ -18,7 +21,34 @@ public class UI {
 	 *	end try
 	 */
 	public UI() throws NoSuchIDExceptions, NoSuchCommandExceptions {
-		
+		aGradeSystem = new GradeSystems();
+		System.out.print("輸入ID或Q(結束使用)？");
+		Scanner sc = new Scanner(System.in);
+		while(sc.hasNext()){
+			String input = sc.nextLine();
+			if(input.equals("Q")){
+				System.out.println("結束了");
+				break;
+			}
+			else if(checkID(input)){
+				showWelcomeMsg(input);
+				System.out.println();
+				while(sc.hasNext()){
+					input = sc.nextLine();
+					if(input.equals("E")){
+						break;
+					}
+					else{
+						promptCommand(input);
+					}
+				}
+				System.out.print("輸入ID或Q(結束使用)？");
+			}
+			else{
+				System.out.println("指令錯了");
+			}
+		}
+
 	}
 	
 	/*
@@ -27,7 +57,13 @@ public class UI {
 	 * 3. 回傳 true
 	 */
 	public boolean checkID(String ID) throws NoSuchIDExceptions {
-		return true;
+		if(!aGradeSystem.containsID(ID)){
+			return false;
+		}
+		else{
+			return true;
+		}
+		
 	}
 	
 	/*
@@ -36,13 +72,41 @@ public class UI {
 	 * 3. if inputCommand is E (Exit) then break
 	 * 4. else: G aGradeSystem.showGrade(ID), R showRank(ID), W updateWeights()
 	 */
-	public void promptCommand() throws NoSuchCommandExceptions {
-		
+	public void promptCommand(String input) throws NoSuchCommandExceptions {
+		if(input.equals("G")){
+			aGradeSystem.showGrade(ID);
+		}
+		else if(input.equals("R")){
+			aGradeSystem.showRank(ID);
+		}
+		else if(input.equals("W")){
+			aGradeSystem.updateWeights();
+		}
+		else{
+			System.out.println("指令錯了");
+		}
+		System.out.println("1) G 顯示成績 (Grade)");
+		System.out.println("2) R 顯示排名 (Rank)");
+		System.out.println("3) W 更新配分 (Weight)");
+		System.out.println("4) E 離開選單 (Exit)");
 	}
 	
-	// show the end. ex: Welcome 李威廷
-	public void showFinishMsg(String name){
-		
+	// show the end.
+	public void showFinishMsg(){
+		String name = aGradeSystem.getName(ID);
+		System.out.println("Bye "+name);
+	}
+	
+	// show welcome ex: Welcome 李威廷
+	public void showWelcomeMsg(String ID){
+		String name = aGradeSystem.getName(ID);
+		this.ID = ID;
+		System.out.println("Welcome "+name);
+		System.out.println("輸入指令");
+		System.out.println("1) G 顯示成績 (Grade)");
+		System.out.println("2) R 顯示排名 (Rank)");
+		System.out.println("3) W 更新配分 (Weight)");
+		System.out.print("4) E 離開選單 (Exit)");
 	}
 	
 }

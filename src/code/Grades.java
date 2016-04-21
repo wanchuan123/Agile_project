@@ -1,5 +1,6 @@
 ﻿package code;
 
+import java.math.BigDecimal;
 
 public class Grades {
 	private String ID, name;
@@ -23,7 +24,13 @@ public class Grades {
 
 	// totalGrade須四捨五入
 	public int calculateTotalGrade(int[] weights){
-		return 0;
+		int totalGrade = 0;
+		totalGrade = lab1*weights[0] + lab2*weights[1] + lab3*weights[2] + midTerm*weights[3] + finalExam*weights[4];
+		totalGrade = new BigDecimal(totalGrade/100)
+                .setScale(0, BigDecimal.ROUND_HALF_UP)
+                .intValue();
+		
+		return totalGrade;
 	}
 
 	public String getID() {
