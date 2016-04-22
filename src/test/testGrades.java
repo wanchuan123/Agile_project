@@ -2,6 +2,10 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -48,7 +52,26 @@ public class testGrades {
 	@Test
 	public void testShowRank() {
 		String ID = "985002039";
-		assertEquals(4,gs.showRank(ID));
+		final  ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+		System.setOut (new PrintStream (outContent));
+		gs.showRank(ID);
+		assertEquals("4\r\n", outContent.toString());
+	}
+	
+	@Test
+	public void testShowGrade() {
+		String ID = "962001051";
+		final  ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+		System.setOut (new PrintStream (outContent));
+		gs.showGrade(ID);
+		assertEquals("90\r\n", outContent.toString());
 	}
 
+	@Test
+	public void testGetName() {
+		String ID = "962001051";
+		String name = gs.getName(ID);
+		assertEquals("李威廷", name);
+	}
+	
 }

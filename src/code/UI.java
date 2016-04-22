@@ -22,16 +22,17 @@ public class UI {
 	 */
 	public UI() throws NoSuchIDExceptions, NoSuchCommandExceptions {
 		aGradeSystem = new GradeSystems();
-		System.out.print("輸入ID或Q(結束使用)？");
+		System.out.println("輸入ID或Q(結束使用)？");
 		Scanner sc = new Scanner(System.in);
 		while(sc.hasNext()){
 			String input = sc.nextLine();
 			if(input.equals("Q")){
-				System.out.println("結束了");
+				showFinishMsg();
 				break;
 			}
 			else if(checkID(input)){
 				showWelcomeMsg(input);
+				showPromptCommand();
 				System.out.println();
 				while(sc.hasNext()){
 					input = sc.nextLine();
@@ -73,6 +74,7 @@ public class UI {
 	 * 4. else: G aGradeSystem.showGrade(ID), R showRank(ID), W updateWeights()
 	 */
 	public void promptCommand(String input) throws NoSuchCommandExceptions {
+		
 		if(input.equals("G")){
 			aGradeSystem.showGrade(ID);
 		}
@@ -85,16 +87,12 @@ public class UI {
 		else{
 			System.out.println("指令錯了");
 		}
-		System.out.println("1) G 顯示成績 (Grade)");
-		System.out.println("2) R 顯示排名 (Rank)");
-		System.out.println("3) W 更新配分 (Weight)");
-		System.out.println("4) E 離開選單 (Exit)");
+		showPromptCommand();
 	}
 	
 	// show the end.
 	public void showFinishMsg(){
-		String name = aGradeSystem.getName(ID);
-		System.out.println("Bye "+name);
+		System.out.print("結束了");
 	}
 	
 	// show welcome ex: Welcome 李威廷
@@ -102,11 +100,15 @@ public class UI {
 		String name = aGradeSystem.getName(ID);
 		this.ID = ID;
 		System.out.println("Welcome "+name);
+	}
+	
+	//show prompt command
+	public void showPromptCommand(){
 		System.out.println("輸入指令");
 		System.out.println("1) G 顯示成績 (Grade)");
 		System.out.println("2) R 顯示排名 (Rank)");
 		System.out.println("3) W 更新配分 (Weight)");
-		System.out.print("4) E 離開選單 (Exit)");
+		System.out.println("4) E 離開選單 (Exit)");
 	}
 	
 }

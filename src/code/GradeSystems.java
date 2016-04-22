@@ -36,13 +36,19 @@ public class GradeSystems {
 	        
 	        while (sc.hasNextLine()) {
 	            String ID = sc.next();
+	            
+	            //第一筆讀進來時，ID前面會多一個空字元
+	            if(ID.length()==10){
+	            	ID = ID.substring(1);
+	            }
+	            
 	            String name = sc.next();
 	            int lab1 = sc.nextInt();
 	            int lab2 = sc.nextInt();
 	            int lab3 = sc.nextInt();
 	            int midTerm = sc.nextInt();
 	            int finalExam = sc.nextInt();
-	            
+
 	            Grades aGrade = new Grades(ID,name,lab1,lab2,lab3,midTerm,finalExam);
 	            
 	            int aTotalGrade = aGrade.calculateTotalGrade(weights);
@@ -61,8 +67,9 @@ public class GradeSystems {
 	public boolean containsID(String ID){
 		boolean bool = false;
 		for(int i=0; i<aList.size();i++){
-			//System.out.println(aList.get(i).getID());
-			if(aList.get(i).getID().equals(ID)){
+			//System.out.println(aList.get(i).getID()+"  "+ID);
+			String studentID = aList.get(i).getID();
+			if(ID.equals(studentID)){
 				bool = true;
 				break;
 			}
@@ -101,7 +108,7 @@ public class GradeSystems {
 	 *	4. show 這 ID 的 rank
 	 *	 註: showGrade(ID) showRank(ID) 也可放在UI class 那將是另一種設計 軟體設計無唯一，但是 在這個 project 你初次學習 所以請遵守此設計
 	 */
-	public int showRank(String ID){
+	public void showRank(String ID){
 		int rank = 1;
 		double theTotalGrade = 0;
 		double aTotalGrade = 0;
@@ -119,7 +126,6 @@ public class GradeSystems {
 		}
 		
 		System.out.println(rank);
-		return rank;
 	}
 	
 	/*
@@ -186,8 +192,5 @@ public class GradeSystems {
 		this.weights = weights;
 	}
 
-	public LinkedList<Grades> getGradeList(){
-		return aList;
-	}
 	
 }

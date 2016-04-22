@@ -2,6 +2,10 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -14,8 +18,10 @@ import code.UI;
 
 public class testUI {
 
+	private static UI ui;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		ui = new UI();
 	}
 
 	@AfterClass
@@ -24,34 +30,56 @@ public class testUI {
 
 	@Before
 	public void setUp() throws Exception {
+		
 	}
 
 	@After
 	public void tearDown() throws Exception {
 	}
-
+	
 	@Test
-	public void testUI_positive() {
+	public void testUIExit() {
+		final ByteArrayInputStream  inContent = new ByteArrayInputStream("Q". getBytes());
+		System.setIn (inContent);
+	}
+	@Test
+	public void testUI_negative() {
+		boolean result;
 		try {
-			UI ui = new UI();
-			boolean result = ui.checkID("11111");
+			result = ui.checkID("11111");
 			assertFalse(result);
-		} catch (NoSuchIDExceptions | NoSuchCommandExceptions e) {
+		} catch (NoSuchIDExceptions e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
 	@Test
-	public void testUI_negative() {
+	public void testUI_positive() {
 		try {
-			UI ui = new UI();
-			boolean result = ui.checkID("00001");
+			boolean result = ui.checkID("955002056");
 			assertTrue(result);
-		} catch (NoSuchIDExceptions | NoSuchCommandExceptions e) {
+		} catch (NoSuchIDExceptions e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	public void testShowFinishMsg() {
+		final  ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+		System.setOut (new PrintStream (outContent));
+		ui.showFinishMsg();
+		assertEquals("結束了", outContent.toString());
+	}
+	
+	@Test
+	public void testShowWelcomeMsg() {
+		String ID = "962001051";
+		final  ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+		System.setOut (new PrintStream (outContent));
+		ui.showWelcomeMsg(ID);
+		assertEquals("Welcome 李威廷\r\n", outContent.toString());
 	}
 
 }
