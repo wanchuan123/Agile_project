@@ -2,6 +2,13 @@
 
 import java.math.BigDecimal;
 
+/** **********************************************************************
+class Grades 儲存 ID, name, lab1, lab2, lab3, midTerm, finalExam, and totalGrade
+
+calculateTotalGrade(weights)
+Grades () { } //建構子
+************************************************************************/
+
 public class Grades {
 	private String ID, name;
 	private int lab1, lab2, lab3, midTerm, finalExam, totalGrade;

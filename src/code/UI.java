@@ -3,6 +3,17 @@
 import java.util.LinkedList;
 import java.util.Scanner;
 
+/** ***********************************************************************
+class UI (user interface) 
+
+checkID(ID)
+promptCommand()
+promptID()
+showFinishMsg()
+showWelcomeMsg()
+UI() 建構子 建構 aGradeSystem
+************************************************************************ */
+
 public class UI {
 	
 	private GradeSystems aGradeSystem;
@@ -31,9 +42,10 @@ public class UI {
 				break;
 			}
 			else if(checkID(input)){
+				
 				showWelcomeMsg(input);
 				showPromptCommand();
-				System.out.println();
+
 				while(sc.hasNext()){
 					input = sc.nextLine();
 					if(input.equals("E")){
@@ -59,7 +71,7 @@ public class UI {
 	 */
 	public boolean checkID(String ID) throws NoSuchIDExceptions {
 		if(!aGradeSystem.containsID(ID)){
-			return false;
+			throw new NoSuchIDExceptions();
 		}
 		else{
 			return true;
@@ -70,23 +82,25 @@ public class UI {
 	/*
 	 * 1. prompt user for inputCommand (call checkID(String ID))
 	 * 2. if inputCommand is not G (Grade),R (Rank), W (Weights), or E (Exit),throws an object of NoSuchCommandException
-	 * 3. if inputCommand is E (Exit) then break
-	 * 4. else: G aGradeSystem.showGrade(ID), R showRank(ID), W updateWeights()
+	 * 3. else: G aGradeSystem.showGrade(ID), R showRank(ID), W updateWeights()
 	 */
 	public void promptCommand(String input) throws NoSuchCommandExceptions {
 		
-		if(input.equals("G")){
-			aGradeSystem.showGrade(ID);
-		}
-		else if(input.equals("R")){
-			aGradeSystem.showRank(ID);
-		}
-		else if(input.equals("W")){
-			aGradeSystem.updateWeights();
+		if(!input.equals("G") && !input.equals("R") && !input.equals("W")){
+			throw new NoSuchCommandExceptions();
 		}
 		else{
-			System.out.println("指令錯了");
+			if(input.equals("G")){
+				aGradeSystem.showGrade(ID);
+			}
+			else if(input.equals("R")){
+				aGradeSystem.showRank(ID);
+			}
+			else if(input.equals("W")){
+				aGradeSystem.updateWeights();
+			}
 		}
+
 		showPromptCommand();
 	}
 	
@@ -103,7 +117,7 @@ public class UI {
 	}
 	
 	//show prompt command
-	public void showPromptCommand(){
+	private void showPromptCommand(){
 		System.out.println("輸入指令");
 		System.out.println("1) G 顯示成績 (Grade)");
 		System.out.println("2) R 顯示排名 (Rank)");

@@ -7,6 +7,15 @@ import java.io.FileReader;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+/** *************************************************************************
+class GradeSystems儲存 a list of student grades.
+
+containsID(ID)  //看aGradeSystem有否含此ID
+GradeSystems () //建構子
+showGrade(ID)
+showRank(ID)
+updateWeights ()
+*************************************************************************** */
 public class GradeSystems {
 	
 	/*
@@ -63,16 +72,25 @@ public class GradeSystems {
 		
 	}
 	
-	//看aGradeSystem有否含此ID
-	public boolean containsID(String ID){
+	
+	/*
+	 * 看aGradeSystem有否含此ID
+	 * 1.	要aGradeSystem 做containsID(ID) 看 ID 是否含在 aGradeSystem內 
+	 * 2.	if not, throw an object of NoSuchIDExceptions
+	 * 3.	回傳 true
+	 */
+	public boolean containsID(String ID) throws NoSuchIDExceptions{
 		boolean bool = false;
 		for(int i=0; i<aList.size();i++){
-			//System.out.println(aList.get(i).getID()+"  "+ID);
 			String studentID = aList.get(i).getID();
 			if(ID.equals(studentID)){
 				bool = true;
 				break;
 			}
+		}
+		
+		if(!bool){
+			throw new NoSuchIDExceptions();
 		}
 		return bool;
 	}
@@ -83,9 +101,16 @@ public class GradeSystems {
 		for(int i=0; i<aList.size();i++){
 			if(aList.get(i).getID().equals(ID)){
 				grade = aList.get(i).getTotalGrade();
+				System.out.println("lab1 : " + aList.get(i).getLab1());
+				System.out.println("lab2 : " + aList.get(i).getLab2());
+				System.out.println("lab3 : " + aList.get(i).getLab3());
+				System.out.println("mid-term : " +aList.get(i).getMidTerm());
+				System.out.println("final exam : " + aList.get(i).getFinalExam());
+				System.out.println("total grade : " + grade);
 				break;
 			}
 		}
+		
 		System.out.println(grade);
 	}
 	
@@ -125,7 +150,7 @@ public class GradeSystems {
 			}
 		}
 		
-		System.out.println(rank);
+		System.out.println(getName(ID)+"排名為第"+rank+"名");
 	}
 	
 	/*
@@ -144,7 +169,7 @@ public class GradeSystems {
 		}
 	}
 	
-	public void showOldWeights(){
+	private void showOldWeights(){
 		System.out.println("舊配分");
 		System.out.println("lab1 : " + weights[0] +"%");
 		System.out.println("lab2 : " + weights[1] +"%");

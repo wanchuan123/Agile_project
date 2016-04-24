@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import code.GradeSystems;
 import code.Grades;
+import code.NoSuchIDExceptions;
 
 public class testGrades {
 
@@ -46,7 +47,12 @@ public class testGrades {
 	@Test
 	public void testContainsID() {
 		String ID = "985002039";
-		assertTrue(gs.containsID(ID));
+		try {
+			assertTrue(gs.containsID(ID));
+		} catch (NoSuchIDExceptions e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test

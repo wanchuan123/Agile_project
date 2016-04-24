@@ -20,7 +20,7 @@ public class testUI {
 
 	private static UI ui;
 	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
+	public static void setUpBeforeClass() throws NoSuchIDExceptions, NoSuchCommandExceptions {
 		ui = new UI();
 	}
 
@@ -42,16 +42,10 @@ public class testUI {
 		final ByteArrayInputStream  inContent = new ByteArrayInputStream("Q". getBytes());
 		System.setIn (inContent);
 	}
-	@Test
-	public void testUI_negative() {
-		boolean result;
-		try {
-			result = ui.checkID("11111");
-			assertFalse(result);
-		} catch (NoSuchIDExceptions e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
+	@Test(expected = NoSuchIDExceptions.class)
+	public void testUI_negative() throws NoSuchIDExceptions {
+		boolean result = ui.checkID("11111");
 	}
 	
 	@Test
